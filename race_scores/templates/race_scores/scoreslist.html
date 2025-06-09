@@ -147,6 +147,10 @@
 <div class="scores-container">
         <a class="button button-green" href="{% url 'scoreadd' %}">新增紀錄</a>
 </div>    
+{% else %}
+<div class="scores-container">
+    <h1 style="color: red;">頁面將在 <span id="countdown">30</span> 秒後刷新</h1>
+</div>
 {% endif %}
 <div class="scores-container">    
     {% for score in scores_list %}
@@ -167,7 +171,22 @@
     </div>
     {% endfor %}
 </div>
-<script>
-   
-</script>
+{% if not request.user.is_authenticated %}
+    
+
+    <script>
+    let seconds = 30; // 倒數起始秒數
+    const countdownElement = document.getElementById("countdown");
+
+    const timer = setInterval(function () {
+        seconds--;
+        countdownElement.textContent = seconds;
+
+        if (seconds <= 0) {
+            clearInterval(timer);
+            location.reload(); 
+        }
+    }, 1000); // 每秒更新一次
+    </script> 
+{% endif %}
 {% endblock %}
