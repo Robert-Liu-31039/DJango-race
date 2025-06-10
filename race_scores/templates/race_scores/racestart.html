@@ -107,7 +107,7 @@
         let td = document.querySelector('td[class="projectionTd"][pt="'+pt+'"]');
         td.innerHTML = '<h2 style="background-color: rgb(182, 64, 182);color: white;">現在投影</h2>';
 
-        const url = `/changeprojection?pt=${pt}&ad=${ad}`;
+        const url = `/change_projection?pt=${pt}&ad=${ad}`;
 
         fetch(url)
         .then(res=>res.json())
@@ -121,7 +121,7 @@
         let b_score = document.querySelector('input[type="number"][class="scoreClass refereeBscore"][pt="'+pt+'"]').value;
         let c_score = document.querySelector('input[type="number"][class="scoreClass refereeCscore"][pt="'+pt+'"]').value;
         
-        const url = `/updatescore?pt=${pt}&a=${a_score}&b=${b_score}&c=${c_score}`;
+        const url = `/update_score?pt=${pt}&a=${a_score}&b=${b_score}&c=${c_score}`;
 
         fetch(url)
         .then(res=>res.json())

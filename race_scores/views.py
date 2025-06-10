@@ -26,8 +26,6 @@ from .forms import (
 def race_areas_list(request):
     areas_list = race_areas.objects.all()
 
-    print(areas_list)
-
     if request.method == "POST":
         # 將 原本 form 的內容記憶起來，用於執行 Insert
         form = race_areasForm(request.POST)
@@ -286,7 +284,7 @@ def update_score(request):
         updateScore.referee_b_score = referee_b_score
         updateScore.referee_c_score = referee_c_score
         updateScore.avg_score = (
-            float(referee_a_score + referee_b_score + referee_c_score) / 3
+            float(referee_a_score) + float(referee_b_score) + float(referee_c_score) / 3
         )
 
         updateScore.save()
@@ -296,6 +294,20 @@ def update_score(request):
         result = "分數更新失敗" + ex
 
     return JsonResponse({"success": True, "result": result})
+
+
+def print_projection(request, id):
+    user = request.user
+    area_list = race_areas.objects.filter(id=id).first()
+    datas = race_scores.objects.filter(area_id=id, projection_tag=True).all()
+
+    result = {
+        "datas": datas,
+        "area_list": area_list,
+        "user": user,
+    }
+
+    return render(request, "race_scores/printprojection.html", result)
 
 
 def score_add(request):
