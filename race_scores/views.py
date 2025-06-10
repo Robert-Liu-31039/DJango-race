@@ -284,7 +284,10 @@ def update_score(request):
         updateScore.referee_b_score = referee_b_score
         updateScore.referee_c_score = referee_c_score
         updateScore.avg_score = (
-            float(referee_a_score) + float(referee_b_score) + float(referee_c_score) / 3
+            float(
+                float(referee_a_score) + float(referee_b_score) + float(referee_c_score)
+            )
+            / 3
         )
 
         updateScore.save()
