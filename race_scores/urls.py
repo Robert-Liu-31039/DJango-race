@@ -1,11 +1,50 @@
 from django.contrib import admin
 from django.urls import path
 
-from .views import race_scores_list, score_add, score_edit, score_delete
+from .views import (
+    race_index,
+    race_areas_list,
+    area_delete,
+    race_levels_list,
+    level_delete,
+    race_years_list,
+    year_delete,
+    race_colors_list,
+    color_delete,
+    race_sexs_list,
+    sex_delete,
+    race_list,
+    race_delete,
+    race_start,
+    cancel_projection,
+    change_projection,
+    update_score,
+    score_add,
+    score_edit,
+    score_delete,
+)
 
 urlpatterns = [
     # 設定 url 路徑 與 要使用的 function， Django 的根目錄預設不用寫
-    path("", race_scores_list, name="scoreslist"),
+    path("", race_index, name="raceindex"),
+    path("area_edit/", race_areas_list, name="areaslist"),
+    path("area_delete/<int:id>/", area_delete, name="areadelete"),
+    path("level_edit/", race_levels_list, name="levelslist"),
+    path("level_delete/<int:id>/", level_delete, name="leveldelete"),
+    path("year_edit/", race_years_list, name="yearslist"),
+    path("year_delete/<int:id>/", year_delete, name="yeardelete"),
+    path("color_edit/", race_colors_list, name="colorslist"),
+    path("color_delete/<int:id>/", color_delete, name="colordelete"),
+    path("sex_edit/", race_sexs_list, name="sexslist"),
+    path("sex_delete/<int:id>/", sex_delete, name="sexdelete"),
+    path("sex_edit/", race_sexs_list, name="sexslist"),
+    path("sex_delete/<int:id>/", sex_delete, name="sexdelete"),
+    path("race_edit/", race_list, name="raceslist"),
+    path("race_delete/<int:id>/", race_delete, name="racedelete"),
+    path("race_start/<int:id>/", race_start, name="racestart"),
+    path("cancelprojection/<int:id>/", cancel_projection, name="cancelprojection"),
+    path("changeprojection/", change_projection, name="changeprojection"),
+    path("updatescore/", update_score, name="updatescore"),
     path("score_add/", score_add, name="scoreadd"),
     path("score_edit/<int:id>/", score_edit, name="scoreedit"),
     path("score_delete/<int:id>/", score_delete, name="scoredelete"),

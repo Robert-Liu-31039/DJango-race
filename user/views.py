@@ -23,7 +23,7 @@ def user_login(request):
             message = "登入成功!"
 
             # 網頁跳轉至 path name="todolist" 的頁面
-            return redirect("scoreslist")
+            return redirect("raceindex")
 
     return render(
         request, "user/login.html", {"username": username, "message": message}
@@ -32,4 +32,4 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect("scoreslist")
+    return redirect("raceindex")

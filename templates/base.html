@@ -66,6 +66,7 @@
             border-radius: 8px;
         }
 
+        select,
         input[type="text"],
         input[type="password"],
         input[type="email"], 
@@ -197,6 +198,104 @@
             transform: scale(0.97);
             color: #fff !important;
         }
+
+        .form-container {
+            max-width: 500px;
+            margin: 32px auto;
+            padding: 24px;
+            background-color: #f4f9ff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .form-group label {
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .form-check label {
+            margin-left: 4px;
+        }
+
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .projection-btn {
+            background-color: #20f277 !important;
+            color: #fff !important;
+        }
+
+        .projection-btn:hover {
+            background-color: #20f277 !important;
+            color: #fff !important;
+        }
+
+        .projection-btn:active {
+            background-color: #20f277 !important;
+            transform: scale(0.97);
+            color: #fff !important;
+        }
+
+        .update-btn {
+            background-color: #9b9594 !important;
+            color: #fff !important;
+        }
+
+        .update-btn:hover {
+            background-color: #9b9594 !important;
+            color: #fff !important;
+        }
+
+        .update-btn:active {
+            background-color: #9b9594 !important;
+            transform: scale(0.97);
+            color: #fff !important;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .error-msg {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 40px;
+        }
     </style>
 
 
@@ -207,7 +306,7 @@
 <body>
     <div id="nav-bar">
         <div class="nav-left">
-            <a href="{% url 'scoreslist' %}">Home</a>
+            <a href="{% url 'raceindex' %}">Home</a>
             
         </div>
         <div class="nav-right">

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}編輯繩子顏色{% endblock %}
+
+{% block style %}
+<style>
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{% url 'raceindex' %}">← 回首頁</a>
+<h1>📝 編輯繩子顏色</h1>
+
+<div class="form-container">
+    {% for data in datas %}
+    <p>
+        {{ data.color }}
+        <a class="button button-danger" href="{% url 'colordelete' data.id %}"
+                    onclick="return confirm('確認是否刪除?!')">刪除</a>
+    </p>
+    {% endfor %}
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>地點繩子顏色：</label>
+            {{ form.color }}
+        </div>
+
+        <button class="submit-btn" type="submit">建立</button>
+    </form>
+</div>
+{% endblock %}

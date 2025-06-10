@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}建立運動賽事{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{% url 'raceindex' %}">← 回首頁</a>
+<h1>📝 建立運動賽事</h1>
+
+<div class="form-container" style="max-width: 100%;">
+    
+    <form method="POST">
+        {% csrf_token %}
+
+        <table>
+            <tr>
+                <td>選手姓名：</td>
+                <td>{{ form.player_name }}</td>
+            </tr>
+            <tr>
+                <td>場地：</td>
+                <td>{{ form.area }}</td>
+                <td>賽式級別：</td>
+                <td>{{ form.level }}</td>
+            </tr>
+            <tr>
+                <td>年齡：</td>
+                <td>{{ form.year }}</td>
+                <td>繩子顏色：</td>
+                <td>{{ form.color }}</td>
+            </tr>
+            <tr>
+                <td>性別：</td>
+                <td>{{ form.sex }}</td>
+            </tr>
+        </table>
+
+        <button class="submit-btn" type="submit">建立</button>
+    </form>
+</div>
+
+<div class="form-container" style="max-width: 100%;background-color: white;">
+    <table style="text-align: center;width:100%;border-collapse: collapse; ">
+        <thead>
+            <tr style="background-color: lightgreen;">
+                <th style="border: 1px solid black; padding: 10px;">姓名</th>
+                <th style="border: 1px solid black; padding: 10px;">場地</th>
+                <th style="border: 1px solid black; padding: 10px;">賽式級別</th>
+                <th style="border: 1px solid black; padding: 10px;">年齡</th>
+                <th style="border: 1px solid black; padding: 10px;">繩子顏色</th>
+                <th style="border: 1px solid black; padding: 10px;">性別</th>
+                <th style="border: 1px solid black; padding: 10px;"></th>
+            </tr>            
+        </thead>
+        <tbody>
+            {% for data in datas %}
+            <tr>
+                <td style="border: 1px solid black; padding: 10px;">{{data.player_name}}</td>
+                <td style="border: 1px solid black; padding: 10px;">{{data.area}}</td>
+                <td style="border: 1px solid black; padding: 10px;">{{data.level}}</td>
+                <td style="border: 1px solid black; padding: 10px;">{{data.year}}</td>
+                <td style="border: 1px solid black; padding: 10px;">{{data.color}}</td>
+                <td style="border: 1px solid black; padding: 10px;">{{data.sex}}</td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    <a class="button button-danger" href="{% url 'racedelete' data.id %}"
+                        onclick="return confirm('確認是否刪除?!')">刪除</a>
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+        
+    </table>
+</div>
+{% endblock %}

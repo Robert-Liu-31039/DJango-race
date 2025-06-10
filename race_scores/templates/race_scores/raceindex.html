@@ -145,13 +145,31 @@
 
 {% if request.user.is_authenticated %}
 <div class="scores-container">
-        <a class="button button-green" href="{% url 'scoreadd' %}">新增紀錄</a>
-</div>    
-{% else %}
-<div class="scores-container">
-    <h1 style="color: red;">頁面將在 <span id="countdown">30</span> 秒後刷新</h1>
+    <a class="button" href="{% url 'areaslist' %}">編輯場地</a>
+    <a class="button" href="{% url 'levelslist' %}">編輯賽式級別</a>
+    <a class="button" href="{% url 'yearslist' %}">編輯年齡</a>
+    <a class="button" href="{% url 'colorslist' %}">編輯繩子顏色</a>
+    <a class="button" href="{% url 'sexslist' %}">編輯性別</a>
+    <a class="button" href="{% url 'raceslist' %}">編輯運動賽事</a>
+    <a class="button button-green" href="{% url 'scoreadd' %}">新增紀錄</a>
 </div>
+
+
+<div class="scores-container">
+    {% for area in area_list%}
+    <a class="button" style="background-color: darkgoldenrod;" href="{% url 'racestart' area.id %}">{{area.area}} 開啟比賽</a>
+    {% endfor %}
+</div>
+
 {% endif %}
+
+<div class="scores-container">
+    {% for area in area_list%}
+    <a class="button" style="background-color: palevioletred;" href="{% url 'scoreedit' area.id %}">{{area.area}} 投影比賽</a>
+    {% endfor %}
+</div>
+
+
 <div class="scores-container">    
     {% for score in scores_list %}
     <div class="scores-card" data-created="{{ score.created|date:'Y-m-d H:i:s' }}">
