@@ -21,6 +21,8 @@ from .forms import (
     race_sexsForm,
 )
 
+from datetime import datetime
+
 
 # Create your views here.
 def race_areas_list(request):
@@ -289,6 +291,8 @@ def update_score(request):
             )
             / 3
         )
+
+        updateScore.score_update = datetime.now()
 
         updateScore.save()
 

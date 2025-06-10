@@ -56,6 +56,8 @@ class race_scores(models.Model):
     avg_score = models.FloatField(null=True, blank=True)
     projection_tag = models.BooleanField(default=False)
 
+    score_update = models.DateTimeField(null=True, blank=True)
+
     # 時間型別中，auto_now_add=True 代表自動帶入現在的時間
     created = models.DateTimeField(auto_now_add=True)
 
