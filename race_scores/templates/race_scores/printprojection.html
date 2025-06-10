@@ -311,24 +311,55 @@
 
     <div class="container">
         <div class="form-container" style="max-width: 100%;">
-        {% if datas %}
-            {% for data in datas %}
-            <div style="font-size: 160px;">
-                {{data.player_name}}
-            </div>
-            <div style="font-size: 160px;">
-                {% if data.avg_score is not None %}
-                    {{data.avg_score|floatformat:2}}
-                {% else %}
-                    &nbsp;
-                {% endif %}
-            </div>
-            {% endfor %}
+        {% if finish_datas %}
+            <table style="text-align: center;width:100%;border-collapse: collapse; ">
+                <thead>
+                    <tr style="background-color: lightgreen;">
+                        <th style="border: 1px solid black; padding: 10px;">姓名</th>
+                        <th style="border: 1px solid black; padding: 10px;">場地</th>
+                        <th style="border: 1px solid black; padding: 10px;">賽式級別</th>
+                        <th style="border: 1px solid black; padding: 10px;">年齡</th>
+                        <th style="border: 1px solid black; padding: 10px;">繩子顏色</th>
+                        <th style="border: 1px solid black; padding: 10px;">性別</th>
+                        <th style="border: 1px solid black; padding: 10px;">比賽分數</th>
+                    </tr>            
+                </thead>
+                <tbody>
+                    {% for data in finish_datas %}
+                    <tr>
+                        <td style="border: 1px solid black; padding: 10px;">{{data.player_name}}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{data.area}}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{data.level}}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{data.year}}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{data.color}}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{data.sex}}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{data.avg_score|floatformat:2}}</td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+                
+            </table>
         {% else %}
-            <div style="font-size: 160px;">
-                comming soon...
-            </div>
-        {% endif %}    
+            {% if datas %}
+                {% for data in datas %}
+                <div style="font-size: 160px;">
+                    {{data.player_name}}
+                </div>
+                <div style="font-size: 160px;">
+                    {% if data.avg_score is not None %}
+                        {{data.avg_score|floatformat:2}}
+                    {% else %}
+                        &nbsp;
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="font-size: 160px;">
+                    comming soon...
+                </div>
+            {% endif %}    
+        {% endif %}
         </div>
 
         <script>

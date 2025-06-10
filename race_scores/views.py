@@ -9,6 +9,7 @@ from .models import (
     race_years,
     race_colors,
     race_sexs,
+    race_finish,
 )
 
 
@@ -215,6 +216,7 @@ def race_start(request, id):
     area_list = race_areas.objects.filter(id=id).first()
     race_list = None
 
+    finish_tag = None
     if request.method == "POST":
         race_list = race_scores.objects.filter(area_id=id).order_by("-created")
 
@@ -231,6 +233,10 @@ def race_start(request, id):
             race_list = race_list.filter(sex_id=request.POST.get("sex"))
 
         form = race_scoresForm(request.POST)
+
+        for data in race_list.all():
+            if data.projection_tag:
+                finish_tag = "Y"
     else:
         form = race_scoresForm
 
@@ -238,6 +244,7 @@ def race_start(request, id):
         "datas": race_list,
         "area_list": area_list,
         "user": user,
+        "finish_tag": finish_tag,
         "form": form,
     }
 
@@ -252,6 +259,11 @@ def change_projection(request):
     result = None
 
     try:
+        # 移除比賽結束的紀錄
+        old = race_finish.objects.filter(area_id=area_id)
+        if old:
+            old.delete()
+
         race_scores.objects.filter(area_id=area_id).update(projection_tag=False)
 
         updateProjectionTag = get_object_or_404(race_scores, id=id)
@@ -308,13 +320,59 @@ def print_projection(request, id):
     area_list = race_areas.objects.filter(id=id).first()
     datas = race_scores.objects.filter(area_id=id, projection_tag=True).all()
 
+    finish_datas = None
+    finish_game = race_finish.objects.filter(area_id=id).first()
+    if finish_game:
+        finish_datas = (
+            race_scores.objects.filter(
+                area_id=finish_game.area_id,
+                level_id=finish_game.level_id,
+                year_id=finish_game.year_id,
+                color_id=finish_game.color_id,
+                sex_id=finish_game.sex_id,
+            )
+            .order_by("-avg_score")
+            .all()
+        )
+
     result = {
         "datas": datas,
+        "finish_datas": finish_datas,
         "area_list": area_list,
         "user": user,
     }
 
     return render(request, "race_scores/printprojection.html", result)
+
+
+def finish_game(request, id):
+    user = request.user
+
+    # 移除舊的比賽結束的紀錄
+    old = race_finish.objects.filter(area_id=id)
+    if old:
+        old.delete()
+
+    last_data = race_scores.objects.filter(area_id=id).order_by("-score_update").first()
+
+    if last_data:
+        insert_datas = []
+        insert_datas.append(
+            race_finish(
+                area_id=last_data.area_id,
+                level_id=last_data.color_id,
+                year_id=last_data.color_id,
+                color_id=last_data.color_id,
+                sex_id=last_data.sex_id,
+            )
+        )
+
+        race_finish.objects.bulk_create(insert_datas, ignore_conflicts=True)
+
+    # 移除投影的設定
+    race_scores.objects.filter(area_id=id).update(projection_tag=False)
+
+    return redirect(reverse("racestart", kwargs={"id": id}))
 
 
 def score_add(request):

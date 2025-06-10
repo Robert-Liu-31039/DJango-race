@@ -41,6 +41,12 @@
     </form>
 </div>
 
+{% if finish_tag %}
+<div class="form-container" style="max-width: 100%;background-color: white;">
+    <a class="button finish-btn" href="{% url 'finishgame' area_list.id %}"
+                onclick="return confirm('確認是否結束本場比賽?!')">結束本場比賽</a>
+</div>
+{% endif %}
 <div class="form-container" style="max-width: 100%;background-color: white;">
     <table style="text-align: center;width:100%;border-collapse: collapse; ">
         <thead>
@@ -94,7 +100,7 @@
             {% endfor %}
         </tbody>
         
-    </table>
+    </table>    
 </div>
 
 <script>

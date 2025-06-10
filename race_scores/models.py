@@ -64,3 +64,18 @@ class race_scores(models.Model):
     def __str__(self):  # self 代表是要取同個 model 內的物件
         # id 是 table 預設一定會有的欄位
         return f"{self.player_name} - {self.referee_a_score} - {self.referee_b_score} - {self.referee_c_score}"
+
+
+class race_finish(models.Model):
+    area = models.ForeignKey(race_areas, on_delete=models.CASCADE)
+    level = models.ForeignKey(race_levels, on_delete=models.CASCADE)
+    year = models.ForeignKey(race_years, on_delete=models.CASCADE)
+    color = models.ForeignKey(race_colors, on_delete=models.CASCADE)
+    sex = models.ForeignKey(race_sexs, on_delete=models.CASCADE)
+
+    # 時間型別中，auto_now_add=True 代表自動帶入現在的時間
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):  # self 代表是要取同個 model 內的物件
+        # id 是 table 預設一定會有的欄位
+        return f"{self.area} - {self.level} - {self.year} - {self.color} - {self.sex}"

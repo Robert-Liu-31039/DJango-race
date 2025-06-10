@@ -8,6 +8,7 @@ from .models import (
     race_years,
     race_colors,
     race_sexs,
+    race_finish,
 )
 
 # Register your models here.
@@ -17,3 +18,4 @@ admin.site.register(race_years)
 admin.site.register(race_colors)
 admin.site.register(race_sexs)
 admin.site.register(race_scores)
+admin.site.register(race_finish)
