@@ -257,6 +257,7 @@ def change_projection(request):
     area_id = request.GET.get("ad")
 
     result = None
+    success = False
 
     try:
         # 移除比賽結束的紀錄
@@ -272,10 +273,11 @@ def change_projection(request):
         updateProjectionTag.save()
 
         result = "投影成功"
+        success = True
     except Exception as ex:
         result = "投影失敗" + ex
 
-    return JsonResponse({"success": True, "result": result})
+    return JsonResponse({"success": success, "result": result})
 
 
 def cancel_projection(request, id):
@@ -291,6 +293,7 @@ def update_score(request):
     referee_c_score = request.GET.get("c")
 
     result = None
+    success = False
 
     try:
         updateScore = get_object_or_404(race_scores, id=id)
@@ -309,10 +312,11 @@ def update_score(request):
         updateScore.save()
 
         result = "分數更新成功"
+        success = True
     except Exception as ex:
         result = "分數更新失敗" + ex
 
-    return JsonResponse({"success": True, "result": result})
+    return JsonResponse({"success": success, "result": result})
 
 
 def print_projection(request, id):
