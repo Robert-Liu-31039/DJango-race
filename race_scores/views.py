@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.urls import reverse
+import pandas as pd
+from django.http import HttpResponse
+from django.db import connection
 
 from .models import (
     race_scores,
@@ -378,6 +381,20 @@ def finish_game(request, id):
 
     return redirect(reverse("racestart", kwargs={"id": id}))
 
+
+def export_race_scores_to_csv(request):
+    # 使用 raw SQL 查詢資料
+    query = "SELECT id,player_name,referee_a_score,referee_b_score,referee_c_score,avg_score FROM race_scores_race_scores"
+    df = pd.read_sql(query, connection)
+
+    # 將 DataFrame 轉換成 CSV 字串
+    csv_data = df.to_csv(index=False, encoding='utf-8-sig')
+
+    # 建立 HttpResponse 作為下載用的 CSV 檔案
+    response = HttpResponse(csv_data, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="race_scores_data.csv"'
+
+    return response
 
 def score_add(request):
     if request.method == "POST":

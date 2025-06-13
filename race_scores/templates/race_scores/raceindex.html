@@ -162,6 +162,11 @@
         {% endfor %}
     </div>
 
+    <h2>比賽結果名冊匯出</h2>
+    <div class="scores-container">
+        <a class="button" style="background-color: rgb(121, 11, 184);" href="{% url 'exportracescorestocsv' %}">名冊匯出</a>
+    </div>
+
 {% endif %}
 
 <h2>投影比賽</h2>
