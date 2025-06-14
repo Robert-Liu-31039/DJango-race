@@ -367,8 +367,8 @@ def finish_game(request, id):
         insert_datas.append(
             race_finish(
                 area_id=last_data.area_id,
-                level_id=last_data.color_id,
-                year_id=last_data.color_id,
+                level_id=last_data.level_id,
+                year_id=last_data.year_id,
                 color_id=last_data.color_id,
                 sex_id=last_data.sex_id,
             )
