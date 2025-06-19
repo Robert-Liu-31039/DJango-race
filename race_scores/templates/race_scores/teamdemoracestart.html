@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %} Team Demo 開啟賽事{% endblock %}
+
+{% block style %}
+<style>
+    .scoreClass{
+        width:70px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{% url 'raceindex' %}">← 回首頁</a>
+<h1>📝 Team Demo 開啟賽事</h1>
+
+<div class="form-container" style="max-width: 100%;">
+    
+    <form method="POST">
+        {% csrf_token %}
+
+        <table>            
+            <tr>
+                <td>賽式級別：</td>
+                <td>{{ form.level }}</td>                
+            </tr>                   
+        </table>
+
+        <button class="submit-btn" type="submit">搜尋</button>
+    </form>
+</div>
+<div id="finishdiv" class="form-container" style="max-width: 100%;background-color: white;">
+{% if finish_tag %}
+    <a class="button finish-btn" href="{% url 'finishteamdemogame' %}"
+                onclick="return confirm('確認是否結束 Team Demo?!')">結束 Team Demo</a>
+{% endif %}
+</div>
+<div class="form-container" style="max-width: 100%;background-color: white;">
+    <table style="text-align: center;width:100%;border-collapse: collapse; ">
+        <thead>
+            <tr style="background-color: lightgreen;">
+                <th style="border: 1px solid black; padding: 10px;">姓名</th>
+                <th style="border: 1px solid black; padding: 10px;">得分1：</th>
+                <th style="border: 1px solid black; padding: 10px;">得分2：</th>
+                <th style="border: 1px solid black; padding: 10px;">得分3：</th>
+                <th style="border: 1px solid black; padding: 10px;">得分4：</th>
+                <th style="border: 1px solid black; padding: 10px;">得分5：</th>
+                <th style="border: 1px solid black; padding: 10px;">投影狀態</th>                
+                <th style="border: 1px solid black; padding: 10px;">
+                    <a class="button button-danger" href="{% url 'cancelteamdemoprojection' %}"
+                    onclick="return confirm('確認是否取消投影?!')">取消投影</a>
+                </th>
+            </tr>            
+        </thead>
+        <tbody>
+            {% for data in datas %}
+            <tr>
+                <td style="border: 1px solid black; padding: 10px;">{{data.player_name}}</td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    <input type="number" class="scoreClass refereeAscore" name="referee_a_score" value="{{data.referee_a_score}}" pt="{{data.id}}" />
+                </td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    <input type="number" class="scoreClass refereeBscore" name="referee_b_score" value="{{data.referee_b_score}}" pt="{{data.id}}" />
+                </td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    <input type="number" class="scoreClass refereeCscore" name="referee_c_score" value="{{data.referee_c_score}}" pt="{{data.id}}" />
+                </td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    <input type="number" class="scoreClass refereeDscore" name="referee_d_score" value="{{data.referee_d_score}}" pt="{{data.id}}" />
+                </td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    <input type="number" class="scoreClass refereeEscore" name="referee_e_score" value="{{data.referee_e_score}}" pt="{{data.id}}" />
+                </td>
+                <td class="projectionTd" style="border: 1px solid black; padding: 10px;" pt="{{data.id}}">
+                    {% if data.projection_tag %}
+                        <h2 style="background-color: rgb(182, 64, 182);color: white;">現在投影</h2>
+                    {% else %}
+                        <button class="projection-btn" type="button" onclick="changeTeamDemoProjection('{{data.id}}')">投影</button>
+                    {% endif %}
+                </td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    <button class="update-btn" type="button" onclick="updateTeamDemoScores('{{data.id}}')">更新分數</button>
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+        
+    </table>    
+</div>
+
+<script>
+    function changeTeamDemoProjection(pt){        
+        let tds = document.querySelectorAll('td[class="projectionTd"]');
+        tds.forEach(td => {
+            td.innerHTML = '<button class="projection-btn" type="button" onclick="changeTeamDemoProjection('+td.getAttribute('pt')+')">投影</button>';
+        });
+
+        let td = document.querySelector('td[class="projectionTd"][pt="'+pt+'"]');
+        td.innerHTML = '<h2 style="background-color: rgb(182, 64, 182);color: white;">現在投影</h2>';
+
+        const url = `/change_team_demo_projection?pt=${pt}`;
+
+        fetch(url)
+        .then(res=>res.json())
+        .then(data=>{
+            alert(data.result);            
+
+            if(data.success){
+                let div = document.getElementById('finishdiv');
+                div.innerHTML = '<a class="button finish-btn" href="/finish_team_demo_game" onclick="return confirm(\\"確認是否結束 Team Demo?!\\")">結束 Team Demo</a>';
+            }
+        });
+    }
+
+    function updateTeamDemoScores(pt){
+        let a_score = document.querySelector('input[type="number"][class="scoreClass refereeAscore"][pt="'+pt+'"]').value;
+        let b_score = document.querySelector('input[type="number"][class="scoreClass refereeBscore"][pt="'+pt+'"]').value;
+        let c_score = document.querySelector('input[type="number"][class="scoreClass refereeCscore"][pt="'+pt+'"]').value;
+        let d_score = document.querySelector('input[type="number"][class="scoreClass refereeDscore"][pt="'+pt+'"]').value;
+        let e_score = document.querySelector('input[type="number"][class="scoreClass refereeEscore"][pt="'+pt+'"]').value;
+        
+        const url = `/update_team_demo_score?pt=${pt}&a=${a_score}&b=${b_score}&c=${c_score}&d=${d_score}&e=${e_score}`;
+
+        fetch(url)
+        .then(res=>res.json())
+        .then(data=>{
+            alert(data.result);
+        });
+    }
+</script>
+{% endblock %}

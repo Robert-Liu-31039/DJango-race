@@ -145,6 +145,17 @@
 {% block content %}
 
 {% if request.user.is_authenticated %}
+    <h2>Team Demo 後台設定</h2>
+    <div class="scores-container">
+        <a class="button" style="background-color: rgb(237, 9, 93);" href="{% url 'teamdemolevelslist' %}">編輯賽式級別</a>
+        <a class="button" style="background-color: rgb(237, 9, 93);" href="{% url 'teamdemoraceslist' %}">編輯運動賽事</a>
+    </div>
+
+    <h2>Team Demo 開啟比賽</h2>
+    <div class="scores-container">
+        <a class="button" style="background-color: rgb(138, 11, 184);" href="{% url 'teamdemoracestart' %}">開啟比賽</a>
+    </div>
+
     <h2>後台設定</h2>
     <div class="scores-container">
         <a class="button" href="{% url 'areaslist' %}">編輯場地</a>
@@ -168,6 +179,10 @@
     </div>
 
 {% endif %}
+<h2>Team Demo 投影比賽</h2>
+<div class="scores-container">
+    <a class="button" style="background-color: rgb(10, 217, 182);" href="{% url 'printteamdemoprojection' %}">Team Demo 投影比賽</a>
+</div>
 
 <h2>投影比賽</h2>
 <div class="scores-container">

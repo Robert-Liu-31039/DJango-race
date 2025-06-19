@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}建立運動賽事{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{% url 'raceindex' %}">← 回首頁</a>
+<h1>📝 建立運動賽事</h1>
+
+<div class="form-container" style="max-width: 100%;">
+    
+    <form method="POST">
+        {% csrf_token %}
+
+        <table>
+            <tr>
+                <td>選手姓名：</td>
+                <td>{{ form.player_name }}</td>
+            </tr>
+            <tr>
+                <td>賽式級別：</td>
+                <td>{{ form.level }}</td>
+            </tr>
+        </table>
+
+        <button class="submit-btn" type="submit">建立</button>
+    </form>
+</div>
+
+<div class="form-container" style="max-width: 100%;background-color: white;">
+    <table style="text-align: center;width:100%;border-collapse: collapse; ">
+        <thead>
+            <tr style="background-color: lightgreen;">
+                <th style="border: 1px solid black; padding: 10px;">姓名</th>
+                <th style="border: 1px solid black; padding: 10px;">賽式級別</th>
+                <th style="border: 1px solid black; padding: 10px;"></th>
+            </tr>            
+        </thead>
+        <tbody>
+            {% for data in datas %}
+            <tr>
+                <td style="border: 1px solid black; padding: 10px;">{{data.player_name}}</td>
+                <td style="border: 1px solid black; padding: 10px;">{{data.level}}</td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    <a class="button button-danger" href="{% url 'teamdemoracedelete' data.id %}"
+                        onclick="return confirm('確認是否刪除?!')">刪除</a>
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+        
+    </table>
+</div>
+{% endblock %}

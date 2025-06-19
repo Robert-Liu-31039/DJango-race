@@ -6,6 +6,8 @@ from .models import (
     race_years,
     race_colors,
     race_sexs,
+    team_demo_levels,
+    team_demo_scores,
 )
 
 
@@ -109,4 +111,41 @@ class race_sexsForm(ModelForm):
         fields = [
             "id",
             "sex",
+        ]
+
+
+class team_demo_levelsForm(ModelForm):
+    class Meta:
+        # 宣告 form 使用的是哪個 model
+        model = team_demo_levels
+
+        # fields 代表要使用的欄位有哪些
+        ## "__all__" 代表 table 所有的欄位都要
+        ##fields = "__all__"
+
+        # 指定 要的欄位有哪些
+        fields = [
+            "id",
+            "level",
+        ]
+
+
+class team_demo_scoresForm(ModelForm):
+    class Meta:
+        # 宣告 form 使用的是哪個 model
+        model = team_demo_scores
+
+        # fields 代表要使用的欄位有哪些
+        ## "__all__" 代表 table 所有的欄位都要
+        ##fields = "__all__"
+
+        # 指定 要的欄位有哪些
+        fields = [
+            "player_name",
+            "level",
+            "referee_a_score",
+            "referee_b_score",
+            "referee_c_score",
+            "referee_d_score",
+            "referee_e_score",
         ]
