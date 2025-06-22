@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}編輯場地{% endblock %}
+{% block title %}Edit Ring{% endblock %}
 
 {% block style %}
 <style>
@@ -8,26 +8,26 @@
 {% endblock %}
 
 {% block content %}
-<a class="back-link" href="{% url 'raceindex' %}">← 回首頁</a>
-<h1>📝 編輯場地</h1>
+<a class="back-link" href="{% url 'raceindex' %}">← Go Back Index</a>
+<h1>📝 Edit Ring</h1>
 
 <div class="form-container">
     {% for data in datas %}
     <p>
         {{ data.area }}
         <a class="button button-danger" href="{% url 'areadelete' data.id %}"
-                onclick="return confirm('確認是否刪除?!')">刪除</a>
+                onclick="return confirm('Confirm to Delete?!')">Delete</a>
     </p>
     {% endfor %}
     <form method="POST">
         {% csrf_token %}
 
         <div class="form-group">
-            <label>場地名稱：</label>
+            <label>Ring：</label>
             {{ form.area }}
         </div>
 
-        <button class="submit-btn" type="submit">建立</button>
+        <button class="submit-btn" type="submit">Save</button>
     </form>
 </div>
 {% endblock %}

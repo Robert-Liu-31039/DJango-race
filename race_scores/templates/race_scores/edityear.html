@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}編輯年齡{% endblock %}
+{% block title %}Edit Age{% endblock %}
 
 {% block style %}
 <style>
@@ -8,15 +8,15 @@
 {% endblock %}
 
 {% block content %}
-<a class="back-link" href="{% url 'raceindex' %}">← 回首頁</a>
-<h1>📝 編輯年齡</h1>
+<a class="back-link" href="{% url 'raceindex' %}">← Go Back Index</a>
+<h1>📝 Edit Age</h1>
 
 <div class="form-container">
     {% for data in datas %}
     <p>
         {{ data.year }}
         <a class="button button-danger" href="{% url 'yeardelete' data.id %}"
-                    onclick="return confirm('確認是否刪除?!')">刪除</a>
+                    onclick="return confirm('Confirm to Delete?!')">Delete</a>
     </p>
         
     {% endfor %}
@@ -24,11 +24,11 @@
         {% csrf_token %}
 
         <div class="form-group">
-            <label>年齡：</label>
+            <label>Age：</label>
             {{ form.year }}
         </div>
 
-        <button class="submit-btn" type="submit">建立</button>
+        <button class="submit-btn" type="submit">Save</button>
     </form>
 </div>
 {% endblock %}

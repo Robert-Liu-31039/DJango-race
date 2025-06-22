@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Team Demo 開啟賽事{% endblock %}
+{% block title %} Team Demo Start Game{% endblock %}
 
 {% block style %}
 <style>
@@ -10,8 +10,8 @@
 {% endblock %}
 
 {% block content %}
-<a class="back-link" href="{% url 'raceindex' %}">← 回首頁</a>
-<h1>📝 Team Demo 開啟賽事</h1>
+<a class="back-link" href="{% url 'raceindex' %}">← Go Back Index</a>
+<h1>📝 Team Demo Start Game</h1>
 
 <div class="form-container" style="max-width: 100%;">
     
@@ -20,34 +20,34 @@
 
         <table>            
             <tr>
-                <td>賽式級別：</td>
+                <td>Event：</td>
                 <td>{{ form.level }}</td>                
             </tr>                   
         </table>
 
-        <button class="submit-btn" type="submit">搜尋</button>
+        <button class="submit-btn" type="submit">Search</button>
     </form>
 </div>
 <div id="finishdiv" class="form-container" style="max-width: 100%;background-color: white;">
 {% if finish_tag %}
     <a class="button finish-btn" href="{% url 'finishteamdemogame' %}"
-                onclick="return confirm('確認是否結束 Team Demo?!')">結束 Team Demo</a>
+                onclick="return confirm('Confirm to Finish Team Demo?!')">Finish Team Demo</a>
 {% endif %}
 </div>
 <div class="form-container" style="max-width: 100%;background-color: white;">
     <table style="text-align: center;width:100%;border-collapse: collapse; ">
         <thead>
             <tr style="background-color: lightgreen;">
-                <th style="border: 1px solid black; padding: 10px;">姓名</th>
-                <th style="border: 1px solid black; padding: 10px;">得分1：</th>
-                <th style="border: 1px solid black; padding: 10px;">得分2：</th>
-                <th style="border: 1px solid black; padding: 10px;">得分3：</th>
-                <th style="border: 1px solid black; padding: 10px;">得分4：</th>
-                <th style="border: 1px solid black; padding: 10px;">得分5：</th>
-                <th style="border: 1px solid black; padding: 10px;">投影狀態</th>                
+                <th style="border: 1px solid black; padding: 10px;">Name</th>
+                <th style="border: 1px solid black; padding: 10px;">Score1：</th>
+                <th style="border: 1px solid black; padding: 10px;">Score2：</th>
+                <th style="border: 1px solid black; padding: 10px;">Score3：</th>
+                <th style="border: 1px solid black; padding: 10px;">Score4：</th>
+                <th style="border: 1px solid black; padding: 10px;">Score5：</th>
+                <th style="border: 1px solid black; padding: 10px;">Status</th>                
                 <th style="border: 1px solid black; padding: 10px;">
                     <a class="button button-danger" href="{% url 'cancelteamdemoprojection' %}"
-                    onclick="return confirm('確認是否取消投影?!')">取消投影</a>
+                    onclick="return confirm('Confirm to Cancel Display?!')">Cancel Display</a>
                 </th>
             </tr>            
         </thead>
@@ -72,13 +72,13 @@
                 </td>
                 <td class="projectionTd" style="border: 1px solid black; padding: 10px;" pt="{{data.id}}">
                     {% if data.projection_tag %}
-                        <h2 style="background-color: rgb(182, 64, 182);color: white;">現在投影</h2>
+                        <h2 style="background-color: rgb(182, 64, 182);color: white;">Displaying</h2>
                     {% else %}
-                        <button class="projection-btn" type="button" onclick="changeTeamDemoProjection('{{data.id}}')">投影</button>
+                        <button class="projection-btn" type="button" onclick="changeTeamDemoProjection('{{data.id}}')">Display</button>
                     {% endif %}
                 </td>
                 <td style="border: 1px solid black; padding: 10px;">
-                    <button class="update-btn" type="button" onclick="updateTeamDemoScores('{{data.id}}')">更新分數</button>
+                    <button class="update-btn" type="button" onclick="updateTeamDemoScores('{{data.id}}')">Update Scores</button>
                 </td>
             </tr>
 
@@ -92,11 +92,11 @@
     function changeTeamDemoProjection(pt){        
         let tds = document.querySelectorAll('td[class="projectionTd"]');
         tds.forEach(td => {
-            td.innerHTML = '<button class="projection-btn" type="button" onclick="changeTeamDemoProjection('+td.getAttribute('pt')+')">投影</button>';
+            td.innerHTML = '<button class="projection-btn" type="button" onclick="changeTeamDemoProjection('+td.getAttribute('pt')+')">Display</button>';
         });
 
         let td = document.querySelector('td[class="projectionTd"][pt="'+pt+'"]');
-        td.innerHTML = '<h2 style="background-color: rgb(182, 64, 182);color: white;">現在投影</h2>';
+        td.innerHTML = '<h2 style="background-color: rgb(182, 64, 182);color: white;">Displaying</h2>';
 
         const url = `/change_team_demo_projection?pt=${pt}`;
 
@@ -107,7 +107,7 @@
 
             if(data.success){
                 let div = document.getElementById('finishdiv');
-                div.innerHTML = '<a class="button finish-btn" href="/finish_team_demo_game" onclick="return confirm(\\"確認是否結束 Team Demo?!\\")">結束 Team Demo</a>';
+                div.innerHTML = '<a class="button finish-btn" href="/finish_team_demo_game" onclick="return confirm(\\"Confirm to Finish Team Demo?!\\")">Finish Team Demo</a>';
             }
         });
     }

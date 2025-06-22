@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{area_list.area}} 開啟賽事{% endblock %}
+{% block title %}{{area_list.area}} Start Game{% endblock %}
 
 {% block style %}
 <style>
@@ -10,8 +10,8 @@
 {% endblock %}
 
 {% block content %}
-<a class="back-link" href="{% url 'raceindex' %}">← 回首頁</a>
-<h1>📝 {{area_list.area}} 開啟賽事</h1>
+<a class="back-link" href="{% url 'raceindex' %}">← Go Back Index</a>
+<h1>📝 {{area_list.area}} Start Game</h1>
 
 <div class="form-container" style="max-width: 100%;">
     
@@ -20,49 +20,49 @@
 
         <table>
             <tr>
-                <td>場地：</td>
+                <td>Ring：</td>
                 <td>{{ area_list.area }}</td>
             </tr>
             <tr>
-                <td>賽式級別：</td>
+                <td>Event：</td>
                 <td>{{ form.level }}</td>
-                <td>年齡：</td>
+                <td>Age：</td>
                 <td>{{ form.year }}</td>
             </tr>
             <tr>                
-                <td>繩子顏色：</td>
+                <td>Belt Colour：</td>
                 <td>{{ form.color }}</td>
-                <td>性別：</td>
+                <td>Sex：</td>
                 <td>{{ form.sex }}</td>
             </tr>           
         </table>
 
-        <button class="submit-btn" type="submit">搜尋</button>
+        <button class="submit-btn" type="submit">Search</button>
     </form>
 </div>
 <div id="finishdiv" class="form-container" style="max-width: 100%;background-color: white;">
 {% if finish_tag %}
     <a class="button finish-btn" href="{% url 'finishgame' area_list.id %}"
-                onclick="return confirm('確認是否結束本場比賽?!')">結束本場比賽</a>
+                onclick="return confirm('Confirm to Finish Game?!')">Finish Game</a>
 {% endif %}
 </div>
 <div class="form-container" style="max-width: 100%;background-color: white;">
     <table style="text-align: center;width:100%;border-collapse: collapse; ">
         <thead>
             <tr style="background-color: lightgreen;">
-                <th style="border: 1px solid black; padding: 10px;">姓名</th>
-                <!-- <th style="border: 1px solid black; padding: 10px;">場地</th>
-                <th style="border: 1px solid black; padding: 10px;">賽式級別</th>
-                <th style="border: 1px solid black; padding: 10px;">年齡</th>
-                <th style="border: 1px solid black; padding: 10px;">繩子顏色</th>
-                <th style="border: 1px solid black; padding: 10px;">性別</th> -->
-                <th style="border: 1px solid black; padding: 10px;">得分1：</th>
-                <th style="border: 1px solid black; padding: 10px;">得分2：</th>
-                <th style="border: 1px solid black; padding: 10px;">得分3：</th>
-                <th style="border: 1px solid black; padding: 10px;">投影狀態</th>                
+                <th style="border: 1px solid black; padding: 10px;">Name</th>
+                <!-- <th style="border: 1px solid black; padding: 10px;">Ring</th>
+                <th style="border: 1px solid black; padding: 10px;">Event</th>
+                <th style="border: 1px solid black; padding: 10px;">Age</th>
+                <th style="border: 1px solid black; padding: 10px;">Belt Colour</th>
+                <th style="border: 1px solid black; padding: 10px;">Sex</th> -->
+                <th style="border: 1px solid black; padding: 10px;">Score1：</th>
+                <th style="border: 1px solid black; padding: 10px;">Score2：</th>
+                <th style="border: 1px solid black; padding: 10px;">Score3：</th>
+                <th style="border: 1px solid black; padding: 10px;">Status</th>                
                 <th style="border: 1px solid black; padding: 10px;">
                     <a class="button button-danger" href="{% url 'cancelprojection' area_list.id %}"
-                    onclick="return confirm('確認是否取消投影?!')">取消投影</a>
+                    onclick="return confirm('Confirm to Cancel Display?!')">Cancel Display</a>
                 </th>
             </tr>            
         </thead>
@@ -86,13 +86,13 @@
                 </td>
                 <td class="projectionTd" style="border: 1px solid black; padding: 10px;" pt="{{data.id}}" ad="{{area_list.id}}">
                     {% if data.projection_tag %}
-                        <h2 style="background-color: rgb(182, 64, 182);color: white;">現在投影</h2>
+                        <h2 style="background-color: rgb(182, 64, 182);color: white;">Displaying</h2>
                     {% else %}
-                        <button class="projection-btn" type="button" onclick="changeProjection('{{data.id}}', '{{area_list.id}}')">投影</button>
+                        <button class="projection-btn" type="button" onclick="changeProjection('{{data.id}}', '{{area_list.id}}')">Display</button>
                     {% endif %}
                 </td>
                 <td style="border: 1px solid black; padding: 10px;">
-                    <button class="update-btn" type="button" onclick="updateScores('{{data.id}}')">更新分數</button>
+                    <button class="update-btn" type="button" onclick="updateScores('{{data.id}}')">Update Scores</button>
                 </td>
             </tr>
 
@@ -106,11 +106,11 @@
     function changeProjection(pt, ad){        
         let tds = document.querySelectorAll('td[class="projectionTd"]');
         tds.forEach(td => {
-            td.innerHTML = '<button class="projection-btn" type="button" onclick="changeProjection('+td.getAttribute('pt')+','+td.getAttribute('ad')+')">投影</button>';
+            td.innerHTML = '<button class="projection-btn" type="button" onclick="changeProjection('+td.getAttribute('pt')+','+td.getAttribute('ad')+')">Display</button>';
         });
 
         let td = document.querySelector('td[class="projectionTd"][pt="'+pt+'"]');
-        td.innerHTML = '<h2 style="background-color: rgb(182, 64, 182);color: white;">現在投影</h2>';
+        td.innerHTML = '<h2 style="background-color: rgb(182, 64, 182);color: white;">Displaying</h2>';
 
         const url = `/change_projection?pt=${pt}&ad=${ad}`;
 
@@ -121,7 +121,7 @@
 
             if(data.success){
                 let div = document.getElementById('finishdiv');
-                div.innerHTML = '<a class="button finish-btn" href="/finish_game/{{area_list.id}}" onclick="return confirm(\\"確認是否結束本場比賽?!\\")">結束本場比賽</a>';
+                div.innerHTML = '<a class="button finish-btn" href="/finish_game/{{area_list.id}}" onclick="return confirm(\\"Confirm to Finish Game?!\\")">Finish Game</a>';
             }
         });
     }

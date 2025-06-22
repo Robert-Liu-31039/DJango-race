@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}編輯繩子顏色{% endblock %}
+{% block title %}Edit Belt Colour{% endblock %}
 
 {% block style %}
 <style>
@@ -8,26 +8,26 @@
 {% endblock %}
 
 {% block content %}
-<a class="back-link" href="{% url 'raceindex' %}">← 回首頁</a>
-<h1>📝 編輯繩子顏色</h1>
+<a class="back-link" href="{% url 'raceindex' %}">← Go Back Index</a>
+<h1>📝 Edit Belt Colour</h1>
 
 <div class="form-container">
     {% for data in datas %}
     <p>
         {{ data.color }}
         <a class="button button-danger" href="{% url 'colordelete' data.id %}"
-                    onclick="return confirm('確認是否刪除?!')">刪除</a>
+                    onclick="return confirm('Confirm to Delete?!')">Delete</a>
     </p>
     {% endfor %}
     <form method="POST">
         {% csrf_token %}
 
         <div class="form-group">
-            <label>地點繩子顏色：</label>
+            <label>Belt Colour：</label>
             {{ form.color }}
         </div>
 
-        <button class="submit-btn" type="submit">建立</button>
+        <button class="submit-btn" type="submit">Save</button>
     </form>
 </div>
 {% endblock %}

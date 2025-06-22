@@ -145,49 +145,49 @@
 {% block content %}
 
 {% if request.user.is_authenticated %}
-    <h2>Team Demo 後台設定</h2>
+    <h2>Team Demo Master Settings</h2>
     <div class="scores-container">
-        <a class="button" style="background-color: rgb(237, 9, 93);" href="{% url 'teamdemolevelslist' %}">編輯賽式級別</a>
-        <a class="button" style="background-color: rgb(237, 9, 93);" href="{% url 'teamdemoraceslist' %}">編輯運動賽事</a>
+        <a class="button" style="background-color: rgb(237, 9, 93);" href="{% url 'teamdemolevelslist' %}">Edit Event</a>
+        <a class="button" style="background-color: rgb(237, 9, 93);" href="{% url 'teamdemoraceslist' %}">Build Up</a>
     </div>
 
-    <h2>Team Demo 開啟比賽</h2>
+    <h2>Team Demo Start Game</h2>
     <div class="scores-container">
-        <a class="button" style="background-color: rgb(138, 11, 184);" href="{% url 'teamdemoracestart' %}">開啟比賽</a>
+        <a class="button" style="background-color: rgb(138, 11, 184);" href="{% url 'teamdemoracestart' %}">Start Game</a>
     </div>
 
-    <h2>後台設定</h2>
+    <h2>Master Settings</h2>
     <div class="scores-container">
-        <a class="button" href="{% url 'areaslist' %}">編輯場地</a>
-        <a class="button" href="{% url 'levelslist' %}">編輯賽式級別</a>
-        <a class="button" href="{% url 'yearslist' %}">編輯年齡</a>
-        <a class="button" href="{% url 'colorslist' %}">編輯繩子顏色</a>
-        <a class="button" href="{% url 'sexslist' %}">編輯性別</a>
-        <a class="button" href="{% url 'raceslist' %}">編輯運動賽事</a>
+        <a class="button" href="{% url 'areaslist' %}">Edit Ring</a>
+        <a class="button" href="{% url 'levelslist' %}">Edit Event</a>
+        <a class="button" href="{% url 'yearslist' %}">Edit Age</a>
+        <a class="button" href="{% url 'colorslist' %}">Edit Belt Colour</a>
+        <a class="button" href="{% url 'sexslist' %}">Edit Sex</a>
+        <a class="button" href="{% url 'raceslist' %}">Build Up</a>
     </div>
 
-    <h2>開啟比賽</h2>
+    <h2>Start Game</h2>
     <div class="scores-container">
         {% for area in area_list%}
-        <a class="button" style="background-color: darkgoldenrod;" href="{% url 'racestart' area.id %}">{{area.area}} 開啟比賽</a>
+        <a class="button" style="background-color: darkgoldenrod;" href="{% url 'racestart' area.id %}">{{area.area}}</a>
         {% endfor %}
     </div>
 
-    <h2>比賽結果名冊匯出</h2>
+    <h2>Download Results</h2>
     <div class="scores-container">
-        <a class="button" style="background-color: rgb(121, 11, 184);" href="{% url 'exportracescorestocsv' %}">名冊匯出</a>
+        <a class="button" style="background-color: rgb(121, 11, 184);" href="{% url 'exportracescorestocsv' %}">Namelists Download</a>
     </div>
 
 {% endif %}
-<h2>Team Demo 投影比賽</h2>
+<h2>Team Demo Display</h2>
 <div class="scores-container">
-    <a class="button" style="background-color: rgb(10, 217, 182);" href="{% url 'printteamdemoprojection' %}">Team Demo 投影比賽</a>
+    <a class="button" style="background-color: rgb(10, 217, 182);" href="{% url 'printteamdemoprojection' %}">Team Demo</a>
 </div>
 
-<h2>投影比賽</h2>
+<h2>Display</h2>
 <div class="scores-container">
     {% for area in area_list%}
-    <a class="button" style="background-color: palevioletred;" href="{% url 'printprojection' area.id %}">{{area.area}} 投影比賽</a>
+    <a class="button" style="background-color: palevioletred;" href="{% url 'printprojection' area.id %}">{{area.area}}</a>
     {% endfor %}
 </div>
 

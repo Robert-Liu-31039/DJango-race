@@ -281,10 +281,10 @@ def change_projection(request):
 
         updateProjectionTag.save()
 
-        result = "投影成功"
+        result = "Display Successful"
         success = True
     except Exception as ex:
-        result = "投影失敗" + ex
+        result = "Display Fail" + ex
 
     return JsonResponse({"success": success, "result": result})
 
@@ -320,10 +320,10 @@ def update_score(request):
 
         updateScore.save()
 
-        result = "分數更新成功"
+        result = "Score Update Successful"
         success = True
     except Exception as ex:
-        result = "分數更新失敗" + ex
+        result = "Score Update Fail" + ex
 
     return JsonResponse({"success": success, "result": result})
 
@@ -382,7 +382,7 @@ def finish_game(request, id):
 
         race_finish.objects.bulk_create(insert_datas, ignore_conflicts=True)
 
-    # 移除投影的設定
+    # 移除Display的設定
     race_scores.objects.filter(area_id=id).update(projection_tag=False)
 
     return redirect(reverse("racestart", kwargs={"id": id}))
@@ -396,7 +396,7 @@ def export_race_scores_to_csv(request):
     query2 = "SELECT id,player_name,referee_a_score,referee_b_score,referee_c_score,referee_d_score,referee_e_score,sum_score FROM race_scores_team_demo_scores"
     df2 = pd.read_sql(query2, connection)
 
-    # 建立 Excel 檔案的記憶體緩衝區
+    # Save Excel 檔案的記憶體緩衝區
     output = BytesIO()
 
     # 用 ExcelWriter 把多個 Sheet 寫入同一個檔案中
@@ -527,10 +527,10 @@ def change_team_demo_projection(request):
         if old:
             old.delete()
 
-        result = "投影成功"
+        result = "Display Successful"
         success = True
     except Exception as ex:
-        result = "投影失敗" + ex
+        result = "Display Fail" + ex
 
     return JsonResponse({"success": success, "result": result})
 
@@ -577,10 +577,10 @@ def update_team_demo_score(request):
 
         updateScore.save()
 
-        result = "分數更新成功"
+        result = "Score Update Successful"
         success = True
     except Exception as ex:
-        result = "分數更新失敗" + ex
+        result = "Score Update Fail" + ex
 
     return JsonResponse({"success": success, "result": result})
 
@@ -643,7 +643,7 @@ def finish_team_demo_game(request):
 
         team_demo_finish.objects.bulk_create(insert_datas, ignore_conflicts=True)
 
-    # 移除投影的設定
+    # 移除Display的設定
     team_demo_scores.objects.filter(level_id=level_id).update(projection_tag=False)
 
     return redirect(reverse("teamdemoracestart"))
@@ -700,7 +700,7 @@ def score_edit(request, id):  # Django 規定 : 一定要帶 request 這個參�
             # 真的存於 db 中
             action.save()
 
-            message = "修改成功"
+            message = "修改 Successful"
 
     except Exception as e:
         print(e)

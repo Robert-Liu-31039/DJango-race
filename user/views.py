@@ -20,7 +20,7 @@ def user_login(request):
             message = "帳號或密碼錯誤!"
         else:
             login(request, user)
-            message = "登入成功!"
+            message = "登入Successful!"
 
             # 網頁跳轉至 path name="todolist" 的頁面
             return redirect("raceindex")
