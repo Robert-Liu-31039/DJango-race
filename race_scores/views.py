@@ -5,6 +5,7 @@ import pandas as pd
 from django.http import HttpResponse
 from django.db import connection
 from io import BytesIO
+from django.core.paginator import Paginator
 
 from .models import (
     race_scores,
@@ -181,7 +182,12 @@ def sex_delete(request, id):  # Django 規定 : 一定要帶 request 這個參�
 
 
 def race_list(request):
-    race_list = race_scores.objects.all()
+    race_list = race_scores.objects.all().order_by("-id")
+
+    # 分頁：每頁 10 筆
+    paginator = Paginator(race_list, 10)
+    page_number = request.GET.get("page")  # 從 URL 取得目前頁碼 ?page=1
+    page_obj = paginator.get_page(page_number)
 
     if request.method == "POST":
 
@@ -199,7 +205,9 @@ def race_list(request):
         form = race_scoresForm
 
     return render(
-        request, "race_scores/editrace.html", {"datas": race_list, "form": form}
+        request,
+        "race_scores/editrace.html",
+        {"form": form, "page_obj": page_obj},
     )
 
 
