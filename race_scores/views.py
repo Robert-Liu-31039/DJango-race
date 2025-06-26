@@ -184,8 +184,8 @@ def sex_delete(request, id):  # Django 規定 : 一定要帶 request 這個參�
 def race_list(request):
     race_list = race_scores.objects.all().order_by("-id")
 
-    # 分頁：每頁 10 筆
-    paginator = Paginator(race_list, 10)
+    # 分頁：每頁 25 筆
+    paginator = Paginator(race_list, 25)
     page_number = request.GET.get("page")  # 從 URL 取得目前頁碼 ?page=1
     page_obj = paginator.get_page(page_number)
 
@@ -459,8 +459,8 @@ def team_demo_level_delete(request, id):  # Django 規定 : 一定要帶 request
 def team_demo_race_list(request):
     race_list = team_demo_scores.objects.all().order_by("-id")
 
-    # 分頁：每頁 10 筆
-    paginator = Paginator(race_list, 10)
+    # 分頁：每頁 25 筆
+    paginator = Paginator(race_list, 25)
     page_number = request.GET.get("page")  # 從 URL 取得目前頁碼 ?page=1
     page_obj = paginator.get_page(page_number)
 
